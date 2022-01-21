@@ -20,6 +20,7 @@ body {
 }
 #garden div, #garden svg {
     width:100px;
+    height:100px;
 }
 #stats {
     list-style: none;
