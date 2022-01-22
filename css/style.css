@@ -6,7 +6,7 @@ body {
     font-weight:400;
     text-align: center;
     font-size:16px;
-    padding: 0 30vw;
+    padding: 0 20vw;
 }
 #garden {
     display:grid;    
@@ -15,6 +15,7 @@ body {
     padding:25px;
     grid-auto-columns: 1fr;
     cursor: url("../img/shovel2.svg"), auto;
+    max-width:30vw;
 }
 #garden div, #garden div svg {
     max-height:25vh;
@@ -27,12 +28,12 @@ body {
 #stats {
     list-style: none;
     padding: 0;
-    font-size:1.5em;
-    font-weight:700;
+    font-size:1.2em;
     display:flex;
     justify-content:space-around;
     margin:0 auto;
     padding:0.5em 0 0.5em;
+    max-width:60vh;
 }
 h1{
     font-weight: 700;
@@ -87,4 +88,19 @@ h1{
     border-right-color: rgb(107, 54, 17);
     transform: scale(1.5);
     margin-left:-0.2em;
+}
+footer button {
+    border:2px solid rgb(107, 54, 17);
+    background: rgb(107, 54, 17);
+    color:white;
+    padding:0.5em 2em;
+    margin-top:1em;
+    font-weight:700;
+    font-size:1.2em;
+}
+footer #restart-btn {
+    background: rgb(107, 17, 17);
+}
+footer button:hover, footer button:focus {
+    border:2px solid white;
 }

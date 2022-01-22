@@ -1,7 +1,7 @@
 const NUMSPECIES = 12;
 const MAXAGE = 50;
 const NUMFLOWERS = 16;
-const DAYLENGTH = 30;
+let DAYLENGTH = 30;
 const BIRTHCYCLE = 3;
 const MUTATIONCHANCE = 10;
 const GARDEN = document.getElementById("garden");
@@ -9,6 +9,7 @@ let flowers = [];
 let pruned = 0;
 let day = 1;
 let timer;
+let paused = false;
 
 let achievements = {
     "True Black": false,
@@ -316,8 +317,23 @@ function makeImg(species, primaryColor, secondaryColor, tertiaryColor) {
     }
 }
 
+function speedToggle()
+{
+    if (DAYLENGTH === 30){
+        DAYLENGTH = 10;
+    } else if (DAYLENGTH === 10) {
+        DAYLENGTH = 5
+    } else {
+        DAYLENGTH = 30;
+    }
+    document.getElementById("directions").textContent = `Click a flower to prune it from the garden. A day lasts ${DAYLENGTH} seconds. Flowers live ${MAXAGE} days and make seeds every ${BIRTHCYCLE} days.`
+    clearInterval(timer);
+    timer = window.setInterval(tick, DAYLENGTH*1000);
+}
+
 function tick(){
     let toAdd = [["random", "random", "random", "random"]];
+    let emptySpaces = [];
     day += 1;
     for (let i=0; i<NUMFLOWERS; i++){
         if (!flowers[i].dead){
@@ -328,30 +344,59 @@ function tick(){
             if (flowers[i].age >= MAXAGE) {
                 flowers[i].reset()
             }
+        } else {
+            emptySpaces.push(i);
         }
     }
-    // Shuffle potential babies
+    // Shuffle potential babies and empty spaces
     toAdd = toAdd.sort(() => Math.random() - 0.5)
+    emptySpaces = emptySpaces.sort(() => Math.random() - 0.5)
     // add babies
-    for (let i=0; i<NUMFLOWERS; i++){
-        if (flowers[i].dead && toAdd.length>=1){
-            let genes = toAdd.pop()
-            flowers[i].birth(genes[0], genes[1], genes[2], genes[3])
-        }
+    while (toAdd.length && emptySpaces.length){
+        let genes = toAdd.pop()
+        let spot = emptySpaces.pop()
+        flowers[spot].birth(genes[0], genes[1], genes[2], genes[3])
     }
     renderGame();
+}
+function restartGame() {
+    clearInterval(timer);
+    for (let i=0;i<NUMFLOWERS;i++){
+        prune(i);
+    }
+    
+    day = 0;
+    pruned = 0;
+    paused = false;
+    flowers=[];
+    startGame()
+
+}
+
+function pauseGame(){
+    if (paused) {
+        timer = window.setInterval(tick, DAYLENGTH*1000);
+        document.getElementById("pause-btn").textContent = "Pause";
+    } else {
+        clearInterval(timer);
+        document.getElementById("pause-btn").textContent = "UnPause";
+    }
+    paused = !paused;
 }
 function startGame(){
     for (let i=0;i<NUMFLOWERS;i++){
         flowers.push(new Flower(i));
     }
     document.getElementById("directions").textContent = `Click a flower to prune it from the garden. A day lasts ${DAYLENGTH} seconds. Flowers live ${MAXAGE} days and make seeds every ${BIRTHCYCLE} days.`
-    flowers[0].birth("random", "random", "random", "random");
+    flowers[Math.floor(Math.random()*NUMFLOWERS)].birth("random", "random", "random", "random");
     
     renderGame()
     timer = window.setInterval(tick, DAYLENGTH*1000);
 }
 function main() {
+    document.getElementById("speed-btn").onclick = speedToggle;
+    document.getElementById("pause-btn").onclick = pauseGame;
+    document.getElementById("restart-btn").onclick = restartGame;
     startGame()
 }
 
