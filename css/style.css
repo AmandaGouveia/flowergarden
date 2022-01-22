@@ -1,45 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@400;700');
+@import url('https://fonts.googleapis.com/css2?family=Mochiy+Pop+P+One&family=Azeret+Mono');
 body {
     background: rgb(127, 172, 37);
     color: white;
-    font-family:'Kalam', cursive;
+    font-family: 'Mochiy Pop P One', sans-serif;
     font-weight:400;
     text-align: center;
     font-size:16px;
+    padding: 0 30vw;
 }
 #garden {
-    display:flex;
-    flex-wrap: wrap;
-    align-content:stretch;
-    width:450px;
+    display:grid;    
     margin:0 auto;
     border: 10px solid rgb(107, 54, 17);
     padding:25px;
-    align-items: space-around;
-    justify-content:space-between;
+    grid-auto-columns: 1fr;
+    cursor: url("../img/shovel2.svg"), auto;
 }
-#garden div, #garden svg {
-    width:100px;
-    height:100px;
+#garden div, #garden div svg {
+    max-height:25vh;
+}
+.row {
+    display:grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
 }
 #stats {
     list-style: none;
     padding: 0;
-    font-size:2.5em;
+    font-size:1.5em;
     font-weight:700;
     display:flex;
     justify-content:space-around;
-    max-width:600px;
     margin:0 auto;
-    padding:0;
+    padding:0.5em 0 0.5em;
 }
 h1{
     font-weight: 700;
     font-size:3em;
     padding-bottom: 0;
-    margin-bottom: 0;
+    margin: 0;
 }
 #directions {
-    font-size:1.5em;
-    padding:0 2em;
+    font-size:0.8em;
+    padding:0;
+    margin:0;
+    color:rgb(215, 233, 178);
+}
+.tooltip {
+    width:max-content;
+}
+.tooltip ul {
+    list-style: none;
+    padding:0;
+}
+.tooltip ul li {
+    display:block;
+}
+.tooltip ul li svg {
+    max-width:3em;
+}
+.tooltip h3 {
+    padding:0;
+    margin:0;
+}
+.tippy-box[data-theme~='simple'] {
+    background-color: white;
+    color: rgb(107, 54, 17);
+    border:0.3em solid;
+}
+.tippy-box[data-theme~='simple'][data-placement^='top'] > .tippy-arrow::before {
+    border-top-color: rgb(107, 54, 17);
+    transform: scale(1.5);
+    margin-bottom:-0.2em;
+}
+.tippy-box[data-theme~='simple'][data-placement^='bottom'] > .tippy-arrow::before {
+    border-bottom-color:rgb(107, 54, 17);
+    transform: scale(1.5);
+    margin-top:-0.2em;
+}
+.tippy-box[data-theme~='simple'][data-placement^='left'] > .tippy-arrow::before {
+    border-left-color: rgb(107, 54, 17);
+    transform: scale(1.5);
+    margin-right:-0.2em;
+}
+.tippy-box[data-theme~='simple'][data-placement^='right'] > .tippy-arrow::before {
+    border-right-color: rgb(107, 54, 17);
+    transform: scale(1.5);
+    margin-left:-0.2em;
 }
